@@ -17,6 +17,7 @@ class CustomHeader
     public function handle(Request $request, Closure $next): Response
     {
         // Custom headers
+        $authHeaders = AuthController::Headers;
         $timestamp = $request->header('X-TIMESTAMP');
         $signature = $request->header('X-SIGNATURE');
         $origin = $request->header('ORIGIN');
@@ -26,9 +27,9 @@ class CustomHeader
 
         // Logic cek header
         if (
-            $timestamp === '2025-03-27' && $signature === 'MayBank2025' &&
-            $origin === 'www.maybank.com' && $partnerId === '123456' &&
-            $externalId === '78910' && $channelId === '95221'
+            $timestamp === $authHeaders['X-TIMESTAMP'] && $signature === $authHeaders['X-SIGNATURE'] &&
+            $origin === $authHeaders['ORIGIN'] && $partnerId === $authHeaders['X-PARTNER-ID'] &&
+            $externalId === $authHeaders['X-EXTERNAL-ID'] && $channelId === $authHeaders['CHANNEL-ID']
         ) {
             return $next($request);
         } else {

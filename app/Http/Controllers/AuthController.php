@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public const Headers = [
-        'X-Value' => 'Hello',
-        'X-DATE' => '2025-03-24'
+        'X-TIMESTAMP' => '2025-03-27',
+        'X-SIGNATURE' => 'MayBank2025',
+        'ORIGIN' => 'www.maybank.com',
+        'X-PARTNER-ID' => '123456',
+        'X-EXTERNAL-ID' => '78910',
+        'CHANNEL-ID' => '95221',
     ];
 
     public function register(Request $request)
