@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Api, Url } from "../config/Api";
+import { Api, Url } from "../../config/Api";
 import { Fade } from "react-awesome-reveal";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
@@ -38,7 +38,7 @@ const ProductList = () => {
                   <Card.Img
                     className="img-fluid"
                     variant="top"
-                    src={`${product.image}`}
+                    src={`${Url}/${product.image}`}
                     style={{ height: "200px", objectFit: "contain" }}
                   />
                   <Card.Body>
@@ -46,10 +46,10 @@ const ProductList = () => {
                       {product.name}
                     </Card.Title>
                     <Card.Text className="text-center">
-                      {"Email: " + product.description}
+                      {product.description}
                     </Card.Text>
                     <Card.Text className="text-center">
-                      {"Phone: " + product.price}
+                      {product.price}
                     </Card.Text>
                     <div className="btn-group d-flex justify-content-center gap-2 my-2 mx-2">
                       <Link
