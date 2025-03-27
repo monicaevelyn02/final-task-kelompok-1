@@ -5,6 +5,7 @@ import { Api, Url } from "../../config/Api";
 import { Fade } from "react-awesome-reveal";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -19,6 +20,36 @@ const ProductList = () => {
     setProducts(res.data);
   };
 
+  const deleteProducts = async (productId) => {
+    try {
+      console.log(productId);
+
+      await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "btn-outline-primary",
+        confirmButtonText: "Delete",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          // Call Delete API
+          await axios.delete(`${Api}/${productId}`);
+          getProducts();
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mt-2">
@@ -30,11 +61,11 @@ const ProductList = () => {
       <hr />
       <div className="row">
         {products.map((product) => {
-          console.log("Image URL:", product.image);
+          // console.log("Image URL:", product.image);
           return (
             <div key={product.id} className="col-md-4 mb-3">
               <Fade>
-                <Card>
+                <Card className="shadow">
                   <Card.Img
                     className="img-fluid"
                     variant="top"
@@ -51,7 +82,7 @@ const ProductList = () => {
                     <Card.Text className="text-center">
                       {product.price}
                     </Card.Text>
-                    <div className="btn-group d-flex justify-content-center gap-2 my-2 mx-2">
+                    <div className="d-flex justify-content-center gap-2 my-2">
                       <Link
                         to={`/edit/${product.id}`}
                         className="btn btn-outline-primary"
@@ -59,8 +90,8 @@ const ProductList = () => {
                         Edit
                       </Link>
                       <Button
-                        variant="outline-danger"
-                        // onClick={() => deleteContact(contact.id)}
+                        variant="danger"
+                        onClick={() => deleteProducts(product.id)}
                       >
                         Delete
                       </Button>
