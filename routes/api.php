@@ -21,5 +21,5 @@ Route::post('users/login', [AuthController::class, 'login']);
 // route group
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('users/logout', [AuthController::class, 'logout']);
-    Route::post('balanceInquiry', [AuthController::class, 'balanceInquiry'])->middleware('snap-bi');
+    Route::post('informasi-saldo', [AuthController::class, 'balanceInquiry'])->middleware('snap-bi');
 });
